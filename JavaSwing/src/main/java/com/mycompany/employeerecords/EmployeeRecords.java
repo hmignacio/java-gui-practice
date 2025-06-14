@@ -130,7 +130,7 @@ public class EmployeeRecords extends JFrame {
 
                 Employee employee = EmployeeRecordParser.employeeMap.get(empId);
                 if (employee != null) {
-                    new ViewEmployee(employee).setVisible(true);
+                    new ViewEmployee(EmployeeRecords.this, employee).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "Employee data not found for ID: " + empId, "Error", JOptionPane.ERROR_MESSAGE);
                 }

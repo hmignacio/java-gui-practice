@@ -22,8 +22,10 @@ import java.awt.*;
 public class ViewEmployee extends JFrame {
 
     private Employee employee;
+    private EmployeeRecords parent;
 
-    public ViewEmployee(Employee employee) {
+    public ViewEmployee(EmployeeRecords parent, Employee employee) {
+        this.parent = parent;
         this.employee = employee;
 
         setTitle("Employee Details - " + employee.getEmployeeId());
@@ -172,8 +174,8 @@ public class ViewEmployee extends JFrame {
         btnClose.addActionListener(e -> dispose());
 
         btnEdit.addActionListener(e -> {
-            // TODO: implement edit functionality here
-            JOptionPane.showMessageDialog(this, "Edit feature coming soon.");
+            EditEmployee editFrame = new EditEmployee(parent, employee, ViewEmployee.this);
+            editFrame.setVisible(true);
         });
 
         btnDelete.addActionListener(e -> {
