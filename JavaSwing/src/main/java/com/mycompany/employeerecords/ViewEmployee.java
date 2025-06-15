@@ -14,6 +14,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -22,8 +28,10 @@ import java.awt.*;
 public class ViewEmployee extends JFrame {
 
     private Employee employee;
+    private EmployeeRecords parent;
 
-    public ViewEmployee(Employee employee) {
+    public ViewEmployee(EmployeeRecords parent, Employee employee) {
+        this.parent = parent;
         this.employee = employee;
 
         setTitle("Employee Details - " + employee.getEmployeeId());
@@ -172,23 +180,65 @@ public class ViewEmployee extends JFrame {
         btnClose.addActionListener(e -> dispose());
 
         btnEdit.addActionListener(e -> {
-            // TODO: implement edit functionality here
-            JOptionPane.showMessageDialog(this, "Edit feature coming soon.");
+            EditEmployee editFrame = new EditEmployee(parent, employee, ViewEmployee.this);
+            editFrame.setVisible(true);
         });
 
         btnDelete.addActionListener(e -> {
-            // TODO: implement delete functionality here
             int confirm = JOptionPane.showConfirmDialog(this,
                     "Are you sure you want to delete employee " + employee.getEmployeeId() + "?",
                     "Confirm Delete", JOptionPane.YES_NO_OPTION);
 
             if (confirm == JOptionPane.YES_OPTION) {
-                // perform deletion logic here
-                JOptionPane.showMessageDialog(this, "Employee deleted (mock).");
-                dispose();
+                boolean deleted = deleteEmployeeFromCSV(employee.getEmployeeId());
+
+                if (deleted) {
+                    JOptionPane.showMessageDialog(this, "Employee deleted successfully.");
+                    if (parent != null) {
+                        parent.reloadEmployeeTable(); // refresh JTable
+                    }
+                    dispose(); // close the view
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to delete employee.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
+    
+        private boolean deleteEmployeeFromCSV(String employeeId) {
+        File file = new File("src/docs/MotorPH-Employee-Data.csv");
+        File tempFile = new File("src/docs/temp.csv");
+
+        boolean deleted = false;
+
+        try (
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))
+        ) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.startsWith(employeeId + ",")) {
+                    writer.write(line);
+                    writer.newLine();
+                } else {
+                    deleted = true; // we found and skipped the target line
+                }
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+        // Replace the original file with the temp file
+        if (deleted) {
+            if (file.delete()) {
+                return tempFile.renameTo(file);
+            }
+        }
+
+        return false;
+    }
+
 }
 
 
