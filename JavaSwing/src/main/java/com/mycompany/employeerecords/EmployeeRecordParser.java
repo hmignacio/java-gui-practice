@@ -29,10 +29,11 @@ import java.util.Vector;
  */
 public class EmployeeRecordParser extends JFrame{
     
-    //private static final String EMPLOYEE_DATA_URL = "https://drive.google.com/uc?export=download&id=1Gh7C6XjNXvdYJHEnS39kXN21CtkL-1Zh";
+    
     public static Map<String, Employee> employeeMap = new HashMap<>();
-    private JTable employeeTable = new JTable();// To store Employee objects. Using Employee ID as key; Values as Employee objects.
+    private JTable employeeTable = new JTable();
     Path csvPath = Paths.get("src/docs/MotorPH-Employee-Data.csv");
+    
 
     /*
     * Loads employee data from an external CSV source.
@@ -125,6 +126,46 @@ public class EmployeeRecordParser extends JFrame{
                 return c;
             }
         });
+    }
+        
+        public void loadMapOnly() {
+        try (BufferedReader br = new BufferedReader(new FileReader(csvPath.toFile()))) {
+            CSVFormat format = CSVFormat.DEFAULT.builder()
+                    .setHeader()
+                    .setSkipHeaderRecord(true)
+                    .build();
+
+            CSVParser csvParser = new CSVParser(br, format);
+
+            for (CSVRecord record : csvParser) {
+                Employee emp = new Employee(
+                        record.get("Employee #").trim(),
+                        record.get("Last Name").trim(),
+                        record.get("First Name").trim(),
+                        record.get("Birthday"),
+                        record.get("Address"),
+                        record.get("Phone Number"),
+                        record.get("SSS #"),
+                        record.get("Philhealth #"),
+                        record.get("TIN #"),
+                        record.get("Pag-ibig #"),
+                        record.get("Status"),
+                        record.get("Position"),
+                        record.get("Immediate Supervisor"),
+                        record.get("Basic Salary"),
+                        record.get("Rice Subsidy"),
+                        record.get("Phone Allowance"),
+                        record.get("Clothing Allowance"),
+                        record.get("Gross Semi-monthly Rate"),
+                        record.get("Hourly Rate")
+                );
+
+                employeeMap.put(emp.getEmployeeId(), emp);
+            }
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error loading employee data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
         
 }

@@ -10,7 +10,6 @@ package com.mycompany.employeerecords;
  */
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -43,24 +42,21 @@ public class AddEmployee extends JFrame {
 
         JSeparator separator = new JSeparator();
         separator.setForeground(Color.BLACK);
-        // Set a preferred width smaller than full width and fixed height
-        separator.setMaximumSize(new Dimension(600, 2));  // width 600px, height 2px
-        separator.setAlignmentX(Component.CENTER_ALIGNMENT); // center it horizontally
+        separator.setMaximumSize(new Dimension(600, 2));
+        separator.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Add horizontal margin by wrapping in a JPanel with empty border
+
         JPanel separatorPanel = new JPanel(new BorderLayout());
-        separatorPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20)); // top,left,bottom,right margin
+        separatorPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20)); 
         separatorPanel.add(separator, BorderLayout.CENTER);
 
         
-
         // Top panel with vertical BoxLayout
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
         topPanel.add(headerLabel);
         topPanel.add(separatorPanel);
 
-        // Add the top panel at the top of the frame
         add(topPanel, BorderLayout.NORTH);
         
         JPanel panel = new JPanel();
@@ -92,7 +88,7 @@ public class AddEmployee extends JFrame {
             panel.add(textFields[i], gbc);
         }
 
-        // Assign to class fields for access if needed later
+        // Assign to class fields for access
         txtEmployeeId = textFields[0];
         txtLastName = textFields[1];
         txtFirstName = textFields[2];
@@ -157,7 +153,7 @@ public class AddEmployee extends JFrame {
                 txtHourlyRate.getText().trim()
             };
 
-            // Validate required fields (optional but recommended)
+            // Validate required fields 
             for (String val : values) {
                 if (val.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "All fields must be filled out.", "Validation Error", JOptionPane.WARNING_MESSAGE);
@@ -165,15 +161,15 @@ public class AddEmployee extends JFrame {
                 }
             }
 
-            // Append to local CSV using pipe delimiter to avoid issues with commas in address
+
             try {
-                File file = new File("src/docs/MotorPH-Employee-Data.csv");  // Adjust path as needed
+                File file = new File("src/docs/MotorPH-Employee-Data.csv");
                 boolean fileExists = file.exists();
 
                 FileWriter fw = new FileWriter(file, true); // append = true
                 BufferedWriter writer = new BufferedWriter(fw);
 
-                // If the file was just created, add headers
+              
                 if (!fileExists) {
                     writer.newLine();
                 }
@@ -184,10 +180,10 @@ public class AddEmployee extends JFrame {
                 writer.newLine();
                 writer.close();
 
-                // Notify user
+                // Success alert message
                 JOptionPane.showMessageDialog(this, "Employee data saved successfully.");
 
-                // Refresh main table
+                // Refresh main employee table
                 if (parent != null) {
                     parent.reloadEmployeeTable();
                 }
