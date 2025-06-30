@@ -31,6 +31,7 @@ import javax.swing.table.TableCellRenderer;
 
 public class EmployeeRecords extends JFrame {
     
+   
     // Create and configure JTable
     private static final EmployeeRecordParser employeeData = new EmployeeRecordParser();
     private JTable employeeTable;
@@ -39,7 +40,9 @@ public class EmployeeRecords extends JFrame {
     
     
 
-    public EmployeeRecords() {
+    public EmployeeRecords(String employeeNumber) {
+        employeeData.loadMapOnly();
+        Employee emp = EmployeeRecordParser.employeeMap.get(employeeNumber.trim());
         setTitle("Motor PH Employee Records");
         setSize(1000, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,8 +72,19 @@ public class EmployeeRecords extends JFrame {
         JLabel headerLabel = new JLabel("MOTOR PH EMPLOYEE DATA");
         headerLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         headerLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        headerLabel.setAlignmentX(Component.LEFT_ALIGNMENT);  // align left in vertical BoxLayout
-        headerLabel.setHorizontalAlignment(SwingConstants.LEFT); // text inside label aligns left
+        headerLabel.setAlignmentX(Component.LEFT_ALIGNMENT); 
+        headerLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        // Welcome label
+        String welcomeText = "Welcome!";
+        if (emp != null) {
+            welcomeText = "Welcome, " + emp.getFirstName() + "!";
+        }
+        JLabel welcomeLabel = new JLabel(welcomeText);
+        welcomeLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        welcomeLabel.setForeground(Color.BLACK); 
+        welcomeLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+        welcomeLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // Create buttons
         JButton btnView = new JButton("Display Employee");
@@ -78,14 +92,13 @@ public class EmployeeRecords extends JFrame {
         JButton btnSalary = new JButton("View Salary");
         
 
-        // Panel for buttons, left aligned
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
         buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);  // align left in BoxLayout
         buttonPanel.add(btnView);
         buttonPanel.add(btnAdd);
         buttonPanel.add(btnSalary);
         
-        // Separator line (black)
+        // Separator line
         JSeparator separator = new JSeparator();
         separator.setForeground(Color.BLACK);
         separator.setAlignmentX(Component.LEFT_ALIGNMENT); // align left in BoxLayout
@@ -100,11 +113,12 @@ public class EmployeeRecords extends JFrame {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
         topPanel.add(headerLabel);
+        topPanel.add(welcomeLabel);
         topPanel.add(separator);
         topPanel.add(buttonPanel);
         topPanel.add(separatorTwo);
 
-        // Add the topPanel to your frame or main panel at BorderLayout.NORTH
+        // Add the topPanel to your frame
         add(topPanel, BorderLayout.NORTH);
        
         // Main panel layout: topPanel north, table center
@@ -160,11 +174,6 @@ public class EmployeeRecords extends JFrame {
             });
     }
 
-    
-
-        public static void main(String[] args) {
-            SwingUtilities.invokeLater(() -> new EmployeeRecords().setVisible(true));
-        }
 
         public void reloadEmployeeTable() {
         Vector<String> columnNames = new Vector<>();

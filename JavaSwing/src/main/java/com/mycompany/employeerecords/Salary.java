@@ -43,18 +43,18 @@ public class Salary extends JFrame {
         headerLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
         headerPanel.add(headerLabel, BorderLayout.NORTH);
 
-        // Create a gray, thick separator
+        //separator
         JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
         separator.setForeground(Color.GRAY);
         separator.setPreferredSize(new Dimension(1, 3)); // Thickness: 3px
         separator.setBackground(Color.GRAY); // Ensures visibility on all LAFs
 
-        // Wrap in a panel to add left and right margins
+        //add left and right margins
         JPanel separatorPanel = new JPanel(new BorderLayout());
         separatorPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20)); // Top, Left, Bottom, Right padding
         separatorPanel.add(separator, BorderLayout.CENTER);
 
-        // Add to the frame or header sectio
+        // Add to the frame or header section
         headerPanel.add(separatorPanel, BorderLayout.SOUTH);
         
         add(headerPanel, BorderLayout.NORTH);
@@ -189,14 +189,13 @@ public class Salary extends JFrame {
                 }
             }
 
-            // Update GUI
+            
             grossPayLabel.setText(String.format("PHP %, .2f", totalGross));
             netPayLabel.setText(String.format("PHP %, .2f", totalNet));
             totalHoursLabel.setText(String.format("%.2f", totalMinutes / 60));
             minutesWorkedLabel.setText(String.format("%.0f mins", totalMinutes));
             otMinutesLabel.setText(String.format("%.0f mins", totalOT));
 
-            // Simulate breakdown (you can pass these from the methods if needed)
             benefitsText.append("• Rice Subsidy\n• Phone Allowance\n• OT Pay");
             deductionsText.append("• SSS\n• PhilHealth\n• Pag-IBIG\n• Withholding Tax\n• Late Deductions");
 

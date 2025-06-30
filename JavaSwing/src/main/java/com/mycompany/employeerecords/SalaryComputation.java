@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.mycompany.employeerecords;
 
-/**
- *
- * @author Admin
- */
 import com.opencsv.CSVReader; 
 import com.opencsv.exceptions.CsvException;
-/* kindly add this as a depndency because it worls [erfectly into the logic of my program, 
-it won't affect your program even though we use diffrent csv readers */
+
 
 import java.io.*;
 import java.net.*;
@@ -20,14 +12,6 @@ import java.time.*;
 import java.time.format.*;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
-
-/*
-* Working on the Assumption that Hourly Rate is computed on an 84+- rate (inconsistent)
-* Will be using it as is for computing daily/weekly rates/late/overtime
-* Gross semi-monthly and Basic Salary will be used to computation for government manadatory deductions
-* Allowances are posted as is (monthly basis)
-*/
-
 
 public class SalaryComputation {
     

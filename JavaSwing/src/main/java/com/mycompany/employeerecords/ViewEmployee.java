@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.mycompany.employeerecords;
 
 import java.awt.BorderLayout;
@@ -21,10 +18,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- *
- * @author Admin
- */
 public class ViewEmployee extends JFrame {
 
     private Employee employee;
@@ -47,18 +40,18 @@ public class ViewEmployee extends JFrame {
         JPanel contentPanel = new JPanel(new BorderLayout(15, 15));
         contentPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         
-         // Create the header label
+        // Create the header label
         JLabel headerLabel = new JLabel("Profile");
         headerLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         headerLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        headerLabel.setAlignmentX(Component.LEFT_ALIGNMENT);  // align left in vertical BoxLayout
-        headerLabel.setHorizontalAlignment(SwingConstants.LEFT); // text inside label aligns left
+        headerLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        headerLabel.setHorizontalAlignment(SwingConstants.LEFT); 
 
-        // Separator line (black)
+        // Separator line
         JSeparator separator = new JSeparator();
         separator.setForeground(Color.BLACK);
-        separator.setAlignmentX(Component.LEFT_ALIGNMENT); // align left in BoxLayout
-        separator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 2)); // make it full width & 2px height
+        separator.setAlignmentX(Component.LEFT_ALIGNMENT); 
+        separator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 2)); 
         
 
         // Main top panel with vertical BoxLayout to stack label, separator, buttons vertically
@@ -67,7 +60,6 @@ public class ViewEmployee extends JFrame {
         topPanel.add(headerLabel);
         topPanel.add(separator);
 
-        // Add the topPanel to your frame or main panel at BorderLayout.NORTH
         add(topPanel, BorderLayout.NORTH);
         
         contentPanel.add(topPanel, BorderLayout.NORTH);
@@ -106,7 +98,6 @@ public class ViewEmployee extends JFrame {
 
         gbc.gridy = 0;
 
-        // inside the for loop that adds labels and values:
 
         for (String[] field : fields) {
             // Label (left column)
@@ -149,7 +140,6 @@ public class ViewEmployee extends JFrame {
         }
 
 
-        // Add vertical glue to push items up if there is extra vertical space
         gbc.gridx = 0;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.VERTICAL;
