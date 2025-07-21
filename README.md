@@ -36,4 +36,4 @@ The **MotorPH Payroll System** is a simple payroll system built by using Java an
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/motorph-payroll-system.git
+   git clone https://github.com/hmignacio/java-gui-practice.git
